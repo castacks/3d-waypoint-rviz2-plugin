@@ -9,20 +9,35 @@
 
 #include "waypoint_rviz2_plugin/waypoint_tool.hpp"
 
+#include <geometry_msgs/msg/pose_stamped.hpp>
+
+#ifndef Q_MOC_RUN
 #include <rclcpp/logging.hpp>
 #include <rviz_common/display_context.hpp>
 #include <rviz_common/viewport_mouse_event.hpp>
 #include <rviz_common/window_manager_interface.hpp>
 #include <rviz_common/panel_dock_widget.hpp>
 #include <rviz_common/properties/vector_property.hpp>
+#include <rviz_common/render_panel.hpp>
 #include <rviz_rendering/mesh_loader.hpp>
 #include <rviz_rendering/objects/shape.hpp>
 
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 #include <OgreEntity.h>
+#include <OgreCamera.h>
+#include <OgrePlane.h>
+#include <OgreRay.h>
+#include <OgreViewport.h>
+#endif
 
-#include <geometry_msgs/msg/pose_stamped.hpp>
+// Define slots macro for render_window.hpp compatibility
+#ifndef slots
+#define slots Q_SLOTS
+#define signals Q_SIGNALS
+#endif
+
+#include <rviz_rendering/render_window.hpp>
 
 namespace waypoint_rviz2_plugin {
 
@@ -99,10 +114,25 @@ int WaypointTool::processMouseEvent(rviz_common::ViewportMouseEvent& event) {
     Ogre::Quaternion quaternion;
     Ogre::Plane ground_plane(Ogre::Vector3::UNIT_Z, height);
     
-    if (rviz_rendering::getPointOnPlaneFromWindowXY(
-        event.viewport, ground_plane, event.x,
-        event.y, intersection
-    )) {
+    // Get viewport and camera from the render window
+    auto render_window = event.panel->getRenderWindow();
+    Ogre::Camera * camera = rviz_rendering::RenderWindowOgreAdapter::getOgreCamera(render_window);
+    Ogre::Viewport * viewport = rviz_rendering::RenderWindowOgreAdapter::getOgreViewport(render_window);
+    
+    // Convert mouse coordinates to normalized device coordinates
+    int width = viewport->getActualWidth();
+    int height_px = viewport->getActualHeight();
+    float screen_x = static_cast<float>(event.x) / static_cast<float>(width);
+    float screen_y = static_cast<float>(event.y) / static_cast<float>(height_px);
+    
+    // Create ray from camera through mouse position
+    Ogre::Ray mouse_ray = camera->getCameraToViewportRay(screen_x, screen_y);
+    
+    // Intersect ray with ground plane
+    std::pair<bool, Ogre::Real> result = mouse_ray.intersects(ground_plane);
+    
+    if (result.first) {
+        intersection = mouse_ray.getPoint(result.second);
         move_axis_node_->setVisible(true);
         move_axis_node_->setPosition(intersection);
 

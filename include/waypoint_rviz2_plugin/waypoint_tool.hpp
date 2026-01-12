@@ -9,6 +9,12 @@
 
 #pragma once
 
+#ifndef Q_MOC_RUN
+#include <OgreVector3.h>
+#include <OgreQuaternion.h>
+#include <OgreSceneNode.h>
+#endif
+
 #include <rclcpp/rclcpp.hpp>
 #include <rviz_common/tool.hpp>
 #include <visualization_msgs/msg/interactive_marker.hpp>
@@ -24,12 +30,6 @@ namespace rviz_common {
         class VectorProperty;
     }
     class PanelDockWidget;
-}
-
-namespace Ogre {
-    class Vector3;
-    class Quaternion;
-    class SceneNode;
 }
 
 namespace waypoint_rviz2_plugin {

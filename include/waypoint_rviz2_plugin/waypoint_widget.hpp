@@ -11,6 +11,10 @@
 
 #ifndef Q_MOC_RUN
 #include <mutex>
+#include <OgreVector3.h>
+#include <OgreQuaternion.h>
+#include <OgreSceneNode.h>
+#include <OgreSceneManager.h>
 #endif
 
 #include <QWidget>
@@ -18,13 +22,6 @@
 #include <nav_msgs/msg/path.hpp>
 
 #include "ui_waypoint_plugin.h"
-
-namespace Ogre {
-    class Vector3;
-    class Quaternion;
-    class SceneNode;
-    class SceneManager;
-}
 
 namespace rviz_common {
     class DisplayContext;

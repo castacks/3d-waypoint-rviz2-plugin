@@ -91,6 +91,9 @@ target_link_libraries(${PROJECT_NAME}
 # Prevent pluginlib from using boost
 target_compile_definitions(${PROJECT_NAME} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
 
+# Export plugin description file for pluginlib
+pluginlib_export_plugin_description_file(rviz_common plugin_description.xml)
+
 # Install
 install(TARGETS ${PROJECT_NAME}
   EXPORT ${PROJECT_NAME}
