@@ -95,30 +95,32 @@ rviz2
    - An axis indicator will appear showing the waypoint position
 
 3. **Move Waypoints**:
+   - In the Displays panel, make sure to click Add > By topic > /waypoint_plugin/update/InteractiveMarkers
    - Click and drag the interactive markers to reposition waypoints
    - Use the rotation controls on the markers to adjust orientation
 
-4. **Delete Waypoints**:
+5. **Delete Waypoints**:
    - Right-click on a waypoint to delete it
    - Or right-click on the interactive marker and select "delete" from the menu
 
-5. **Manual Adjustment**:
+6. **Manual Adjustment**:
    - Use the panel controls to manually set X, Y, Z position and Yaw orientation
    - Select "set manual" from the marker context menu to apply manual changes
 
-6. **Configuration**:
+7. **Configuration**:
    - **Topic**: Set the topic name for publishing waypoints (default: `/waypoints`)
    - **Frame**: Set the reference frame for waypoints (default: `map`)
    - **Default Height**: Set the Z-height for new waypoints
 
-7. **Save/Load**:
+8. **Save/Load**:
    - Click "Save Waypoints" to save current waypoints to a .db3 bag file
    - Click "Load Waypoints" to load waypoints from a .db3 bag file
 
-8. **Publish**:
+9. **Publish**:
    - Click "Publish Waypoints" to publish all waypoints as a `nav_msgs/msg/Path` message
+   - To visualize, in the Displays panel click Add > /waypoints > Path
 
-9. **Clear All**:
+10. **Clear All**:
    - Click "Clear All" to remove all waypoints from the scene
 
 ### Listening to Published Waypoints
