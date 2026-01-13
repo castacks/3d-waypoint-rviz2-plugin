@@ -2,6 +2,10 @@
 
 An interactive RViz2 plugin for ROS2 Humble (and above) that allows users to create, manipulate, and manage 3D waypoints directly in the RViz2 visualization environment.
 
+<img width="899" height="664" alt="image" src="https://github.com/user-attachments/assets/655d8e5d-ee15-4daa-aff8-b45f28d3403a" />
+
+
+
 ## Features
 
 - **Interactive Waypoint Creation**: Click to add waypoints at any position in the 3D environment
